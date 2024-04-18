@@ -35,10 +35,13 @@ func BFS(startURL, targetURL string) (string, string, string, time.Duration) {
 		}
 
 		foundTarget := false
-		doc.Find("a").Each(func(i int, s *goquery.Selection) {
+		neighbors := []string{}
+
+		doc.Find("#mw-content-text a").Each(func(i int, s *goquery.Selection) {
 			link, _ := s.Attr("href")
-			if strings.HasPrefix(link, "/wiki/") {
+			if strings.HasPrefix(link, "/wiki/") && !strings.Contains(link, ":") {
 				fullURL := "https://en.wikipedia.org" + link
+				neighbors = append(neighbors, fullURL)
 				if !visited[fullURL] && !foundTarget {
 					queue = append(queue, fullURL)
 					paths[fullURL] = currentURL
@@ -48,6 +51,13 @@ func BFS(startURL, targetURL string) (string, string, string, time.Duration) {
 				}
 			}
 		})
+
+		
+		for _, neighbor := range neighbors {
+			if !visited[neighbor] {
+				queue = append(queue, neighbor)
+			}
+		}
 
 		if foundTarget {
 			// Path found
@@ -60,16 +70,8 @@ func BFS(startURL, targetURL string) (string, string, string, time.Duration) {
 			}
 			duration := time.Since(startTime)
 			return "Shortest path: " + strings.Join(path, " -> "), fmt.Sprintf("Articles checked: %d", articlesChecked), fmt.Sprintf("Articles in solution: %d", articlesInSolution), duration
-			// fmt.Println("Shortest path:")
-			// for _, p := range path {
-			// 	fmt.Println(p)
-			}
-			// fmt.Println("Articles checked:", articlesChecked)
-			// fmt.Println("Articles in solution:", articlesInSolution)
-			// fmt.Println("Time taken:", time.Since(startTime))
-			// return
 		}
-	
+	}
 
 	return "Path not found", "", "", 0
 }
