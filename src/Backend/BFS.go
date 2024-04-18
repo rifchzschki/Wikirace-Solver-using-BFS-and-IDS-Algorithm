@@ -5,11 +5,11 @@ import (
 	"log"
 	"strings"
 	"time"
-
+	"github.com/gin-gonic/gin"
 	"github.com/PuerkitoBio/goquery"
 )
 
-func BFS(startURL, targetURL string) {
+func BFS(startURL, targetURL string) (string, string, string, time.Duration) {
 	startTime := time.Now()
 
 	visited := make(map[string]bool)
@@ -58,24 +58,44 @@ func BFS(startURL, targetURL string) {
 				path = append([]string{currentURL}, path...)
 				articlesInSolution++
 			}
-			fmt.Println("Shortest path:")
-			for _, p := range path {
-				fmt.Println(p)
+			duration := time.Since(startTime)
+			return "Shortest path: " + strings.Join(path, " -> "), fmt.Sprintf("Articles checked: %d", articlesChecked), fmt.Sprintf("Articles in solution: %d", articlesInSolution), duration
+			// fmt.Println("Shortest path:")
+			// for _, p := range path {
+			// 	fmt.Println(p)
 			}
-			fmt.Println("Articles checked:", articlesChecked)
-			fmt.Println("Articles in solution:", articlesInSolution)
-			fmt.Println("Time taken:", time.Since(startTime))
-			return
+			// fmt.Println("Articles checked:", articlesChecked)
+			// fmt.Println("Articles in solution:", articlesInSolution)
+			// fmt.Println("Time taken:", time.Since(startTime))
+			// return
 		}
-	}
+	
 
-	fmt.Println("Path not found")
-	fmt.Println("Time taken:", time.Since(startTime))
+	return "Path not found", "", "", 0
 }
 
 func main() {
-	startURL := "https://en.wikipedia.org/wiki/Mathematics"
-	targetURL := "https://en.wikipedia.org/wiki/Knowledge"
+	r := gin.Default()
 
-	BFS(startURL, targetURL)
+	r.POST("/findpath", func(c *gin.Context) {
+		var input struct {
+			StartURL  string `json:"startURL"`
+			TargetURL string `json:"targetURL"`
+		}
+
+		if err := c.BindJSON(&input); err != nil {
+			c.JSON(400, gin.H{"error": "Invalid input"})
+			return
+		}
+
+		path, checked, inSolution, duration := BFS(input.StartURL, input.TargetURL)
+		c.JSON(200, gin.H{
+			"path":           path,
+			"checked":        checked,
+			"inSolution":     inSolution,
+			"timeTaken":      duration.String(),
+		})
+	})
+
+	r.Run(":8080")
 }
