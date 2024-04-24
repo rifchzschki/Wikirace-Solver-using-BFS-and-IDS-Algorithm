@@ -1,76 +1,158 @@
+{{define "form"}}
+<!DOCTYPE html>
 <html>
   <head>
     <title>WikiRace</title>
     <link rel="stylesheet" href="static/wikirace.css" />
   </head>
+  <style>
+    body {
+      background-image: url("static/before.jpg");
+      background-size: cover; /* Atur ukuran gambar agar menutupi seluruh latar belakang */
+      background-repeat: no-repeat; /* Hindari pengulangan gambar */
+    }
+  </style>
   <body>
-    <!-- LOGI GUTHUB -->
-    <div class="logogithub">
-      <a href="https://github.com">
-        <img src="static/logogithub.png" width="35" height="35" class="gambar-logo-github" />
-      </a>
-    </div>
+    <div class="container-body">
+      <nav class="navbar">
+        <div>
+          <a href="/">Tubes 2 Stima</a>
+        </div>
+        <!-- LOGO GUTHUB -->
+        <div class="logogithub">
+          <a href="https://github.com">
+            <img
+              src="static/logogithub.png"
+              width="35"
+              height="35"
+              class="gambar-logo-github"
+            />
+          </a>
+        </div>
+      </nav>
 
-    <!-- LOGO WIKIRACE -->
-    <div class="titlewikirace">
-      <img src="static/titlewikirace.png" />
-    </div>
+      <!-- LOGO WIKIRACE -->
+      <div class="container-wikirace">
+        <img src="static/titlewikirace.png" />
 
-    <!-- FIND THE SHORTEST -->
-    <div class="header1">
-      <h1 class="h1">Find the shortest paths from</h1>
-    </div>
-
-    <!-- INPUT 1 -->
-    <div class="inputsearch">
-      <input
-        type="text"
-        id="search-bar-1"
-        placeholder="Start page"
-        autocomplete="off"
-      />
-      &#8646;
-      <input
-        type="text"
-        id="search-bar-2"
-        placeholder="Target page"
-        autocomplete="off"
-      />
-      <div>
-        <div class="result-search"></div>
+        <!-- FIND THE SHORTEST -->
+        <div>
+          <h1>Find the shortest paths from</h1>
+        </div>
       </div>
-    </div>
 
-    <!-- BUTTON GO -->
-    <div class="container-go-button">
-      <a href="searchtrue.html#bottom">
-        <button class="go-button">GO!</button>
-      </a>
-    </div>
+      <!-- INPUT -->
+      <form action="/process" method="post" class="container-form">
+        <!-- BUTTON SWITCH -->
+        <div class="container-switch">
+          <div class="switch">
+            <input type="checkbox" id="switcher" name="algo" value="ids" />
+            <label for="switcher"></label>
+          </div>
+        </div>
 
-    <!-- BUTTON SWITCH -->
-    <div class="switch">
-      <input type="checkbox" id="switcher" />
-      <label for="switcher"></label>
-    </div>
+        <!-- INPUT BOX -->
+        <div class="inputsearch">
+          <input
+            class="input-box"
+            type="text"
+            id="search-bar-1"
+            placeholder="Start page"
+            autocomplete="off"
+            name="start"
+            required
+          />
+          <button type="submit" class="button-swap" name="swap">&#8646;</button>
+          <input
+            class="input-box"
+            type="text"
+            id="search-bar-2"
+            placeholder="Target page"
+            autocomplete="off"
+            name="target"
+            required
+          />
+        </div>
 
-    <div class="text-true">
-      <!-- IDS Path -->
-      <h1 class="ids" id="ids-path"></h1>
+        <!-- BUTTON GO -->
+        <div class="container-go-button">
+          <button class="go-button" type="submit">GO!</button>
+        </div>
+      </form>
+      <div class="text-true">
+        <!-- IDS Path -->
+        <h1 class="ids" id="ids-path"></h1>
 
-      <!-- BFS Path -->
-      <h1 class="bfs" id="bfs-path"></h1>
+        <!-- BFS Path -->
+        <h1 class="bfs" id="bfs-path"></h1>
 
-      <!-- Search Time -->
-      <p id="search-time"></p>
-    </div>
+        <!-- Search Time -->
+        <p id="search-time"></p>
+      </div>
 
-    <!-- COMMENT SEARCH TRUE -->
-    <!-- <div class="text-true">
+      <!-- COMMENT SEARCH TRUE -->
+      <!-- <div class="text-true">
             <h1 class="ids"> Found ${ids-path} with IDS of separation from ${startPage} to ${targetPage} in ${searchTime} seconds!</h1>
             <h1 class="bfs"> Found ${bfs-path} with BFS of separation from ${startPage} to ${targetPage} in ${searchTime} seconds!</h1>
         </div> -->
-
+    </div>
     <script src="wikirace.js"></script>
   </body>
 </html>
+{{end}} {{define "result"}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WikiRace</title>
+    <link rel="stylesheet" href="static/wikirace.css" />
+  </head>
+  <style>
+    body {
+      background-image: url("static/after.jpg");
+      background-size: cover; /* Atur ukuran gambar agar menutupi seluruh latar belakang */
+      background-repeat: no-repeat; /* Hindari pengulangan gambar */
+    }
+  </style>
+  <body>
+    <div class="container-result">
+      <div class="result">
+        <!-- LOGO WIKIRACE -->
+        <div class="titlewikirace">
+          <img src="static/titlewikirace.png" />
+          <h1>Find the shortest paths from</h1>
+        </div>
+
+        <!-- FIND THE SHORTEST -->
+        <div class="box-solution">
+          <div class="answer-list">
+            <h1>Rute Terpendek:</h1>
+            <ul>
+              {{ range .path}}
+              <li>{{ . }}</li>
+              {{ end }}
+            </ul>
+          </div>
+          <div class="answer">
+            <h1>Jumlah artikel yang dicek:</h1>
+            <p>{{.checked}}</p>
+          </div>
+          <div class="answer">
+            <h1>Panjang Rute:</h1>
+            <p>{{.solutionLength}}</p>
+          </div>
+          <div class="answer">
+            <h1>Durasi pencarian:</h1>
+            <p>{{.duration}}</p>
+          </div>
+        </div>
+        <div class="back">
+          <a href="/" class="back"
+            ><button class="button-back">Lagi yuk!</button></a
+          >
+        </div>
+      </div>
+    </div>
+    <script src="wikirace.js"></script>
+  </body>
+</html>
+{{end}}

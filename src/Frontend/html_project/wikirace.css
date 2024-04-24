@@ -1,129 +1,120 @@
-body {
-  background-color: black;
+@import url('https://fonts.googleapis.com/css2?family=Lemonada:wght@300..700&display=swap');
+
+.container-body{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   flex-direction: column;
 }
 
-.h1 {
+.navbar {
+  position: relative;
+  width: 90%;
+  background-color: lavender; /* Warna latar belakang navbar */
+  padding: 10px 20px; Padding atas dan bawah 10px, kiri dan kanan 20px
+  color: #fff; /* Warna teks */
+  display: flex; /* Menggunakan flexbox untuk mengatur tata letak */
+  justify-content: space-between; /* Membuat konten di dalam navbar terletak di sebelah kiri dan kanan */
+  align-items: center; /* Memusatkan vertikal konten di dalam navbar */
+  border-radius: 10px;
+  font-family: Lemonada;
+  font-size: 1rem;
+}
+
+.navbar a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar .logogithub {
+  background-color: gold; 
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0px 2px;
+}
+
+.navbar .logogithub .gambar-logo-github {
+  margin: 3px 0px;
+  border-radius: 100%;
+  /* background-color: white; */
+}
+
+.container-wikirace {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 5%;
+  /* background-color: gold; */
+
+}
+
+.container-wikirace h1 {
+  /* background-color: white; */
+  text-align: center;
   color: darkgray;
   height: 3vh;
   font-family: "Arial";
   font-weight: lighter;
 }
 
-.logogithub {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 36;
-  height: 36;
-  z-index: 9999;
-  background: white;
-  border-radius: 100%;
+.container-form {
+  /* background-color: blue; */
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1%
 }
 
-.gambar-logo-github {
-  position: absolute;
-  border-radius: 90%;
-  margin-left: 0.9;
-}
-
-.inputsearch {
+.container-form .inputsearch{
+  /* background-color: green; */
   position: relative;
-  display: inline-block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: white;
-  height: 7vh;
+  height: 10%;
 }
 
-.inputsearch input[type="text"] {
+.container-form .inputsearch .input-box {
+  width: 35%;
   padding: 10px;
   border: 2px solid #ccc;
   border-radius: 20px;
+  color: white;
+  background: transparent;
+  display: inline-block;
+  align-items: center;
+  border: 2px solid #ccc;
+  border-radius: 50px;
+  padding: 10px 20px;
   font-size: 16px;
+  margin: 10px;
+}
+
+.container-form .inputsearch .button-swap {
+  font-size: 22px;
+  width: 9%;
+  padding: 5px 0px;
+  border-radius: 20px;
+  border: 2px solid #ccc;
+}
+
+.container-form .inputsearch .button-swap:hover {
+  border: 2px solid #ccc;
+  /* background-color: darkslategray; */
   color: white;
 }
 
-#search-bar-1 {
-  width: 100%;
-  max-width: 200px;
-  background: transparent;
-  display: inline-block;
-  align-items: center;
-  border: 2px solid #ccc;
-  border-radius: 50px;
-  padding: 10px 20px;
-  font-size: 16px;
-  margin: 10px;
-}
-
-#search-bar-2 {
-  width: 100%;
-  max-width: 200px;
-  background: transparent;
-  display: inline-block;
-  align-items: center;
-  border: 2px solid #ccc;
-  border-radius: 50px;
-  padding: 10px 20px;
-  font-size: 16px;
-  margin: 10px;
-}
-
-.result-search ul {
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
-  border-left: 1px solid white;
-  border: 1px solid white;
-  border-radius: 10px;
-  padding: 5px 5px;
-  background-color: black;
-}
-
-.result-search ul li {
-  list-style: none;
-  border-radius: 3px;
-  padding: 15px 10px;
-  cursor: pointer;
-}
-
-.result-search ul li:hover {
-  background: white;
-  color: black;
-  border-radius: 10px;
-}
-
-.result-search {
-  max-height: 300px;
-  overflow-y: scroll;
-  position: relative;
-  z-index: 999;
-  font-family: "Arial";
-}
-.container-go-button {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-.go-button {
-  font-size: 20px;
-  background-color: gold;
-  border-radius: 50px;
-  border: none;
-  padding: 10px 40px;
-  cursor: pointer;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease;
-  background-image: linear-gradient(to bottom, #f7df89, #d5a900);
-  font-weight: bolder;
-}
-
-.go-button:hover {
-  transform: translateY(-2px);
+.container-form .container-switch {
+  display: flex;
+  justify-content: center;
+  /* background-color: white; */
 }
 
 .switch {
+  margin: 1% 0;
   position: relative;
   width: 200px;
   height: 50px;
@@ -135,6 +126,7 @@ body {
   width: 200px;
   height: 50px;
   border-radius: 25px;
+  border: 1.5px solid black; 
   background-image: linear-gradient(to bottom, #f7df89, #d5a900);
   outline: none;
 }
@@ -210,6 +202,61 @@ body {
   transition: left 0.4s 0.2s, right 0.5s, background 0.35s;
 }
 
+.result-search ul {
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  border-left: 1px solid white;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 5px 5px;
+  background-color: black;
+}
+
+.result-search ul li {
+  list-style: none;
+  border-radius: 3px;
+  padding: 15px 10px;
+  cursor: pointer;
+}
+
+.result-search ul li:hover {
+  background: white;
+  color: black;
+  border-radius: 10px;
+}
+
+.result-search {
+  max-height: 300px;
+  overflow-y: scroll;
+  position: relative;
+  z-index: 999;
+  font-family: "Arial";
+}
+
+.container-form .container-go-button {
+  display: flex;
+  justify-content: center;
+  /* background-color: lavender; */
+  margin: 1% 0;
+}
+.go-button {
+  font-size: 20px;
+  background-color: gold;
+  border-radius: 50px;
+  border: none;
+  padding: 10px 40px;
+  cursor: pointer;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  background-image: linear-gradient(to bottom, #f7df89, #d5a900);
+  font-weight: bolder;
+}
+
+.go-button:hover {
+  transform: translateY(-2px);
+}
+
+
 .ids {
   margin-top: 7vh;
   color: white;
@@ -223,4 +270,116 @@ body {
   height: 3vh;
   font-family: "Arial";
   font-weight: lighter;
+}
+
+.box-solution {
+  color: white;
+}
+
+/* result */
+
+.container-result{
+  /* background-color: white; */
+  display: grid;
+  grid-template-columns: 40% 60%;
+  height: 100vh;
+}
+
+.container-result .result{
+  display: grid;
+  /* background-color: blue; */
+  grid-column: 2/span 1;
+  grid-template-row: 50% 50%;
+}
+
+.container-result .result .titlewikirace{
+  margin-top: 5%;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* background-color: black; */
+  grid-row: 1/span 1;
+}
+.container-result .result .titlewikirace h1{
+  text-align: center;
+  color: darkgray;
+  height: 3vh;
+  font-family: "Arial";
+  font-weight: lighter;
+}
+
+.container-result .result .box-solution{
+  /* background-color: gold; */
+  grid-row: 2/span 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 200px;
+  /* border: 2px solid darkgray;  */
+  /* border-radius: 10px; */
+}
+
+.container-result .result .box-solution .answer-list{
+  position: relative;
+  /* background-color: blue; */
+  display: flex;
+  flex-direction: column;
+  margin: 0px 5%;
+  border: 2px solid darkgray; 
+  padding: 0px 2px; 
+  /* border-radius: 10px */
+  
+  
+}
+.container-result .result .box-solution .answer-list h1{
+  margin-left: 5%;
+  margin-bottom: -2px;
+  margin-top: -1px;
+}
+
+.container-result .result .box-solution .answer-list ul{
+  margin-left: 5%;
+}
+
+
+.container-result .result .box-solution .answer{
+  /* background-color: darkgray; */
+  /* border-radius: 10px; */
+  border: 2px solid darkgray;
+  padding: 2px 2px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 5%;
+}
+
+.container-result .result .box-solution .answer h1{
+  font-size: 20px;
+  margin-left: 5%;
+}
+
+.container-result .result .box-solution .answer p{
+  font-size: 16px;
+  margin-right: 5%;
+}
+
+.container-result .back {
+  /* background-color: black; */
+  text-decoration: none;
+  margin: 10px 10px;
+  display: flex;
+  justify-content: flex-end;
+  
+}
+
+.container-result .back .button-back{
+  background-color: gold;
+  border-radius: 10px;
+  border: 2px solid moccasin;
+}
+
+.container-result .back .button-back:hover{
+  background-color: chartreuse;
+  border-radius: 10px;
+  border: 2px solid gold;
 }
