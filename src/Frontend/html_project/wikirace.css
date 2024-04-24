@@ -18,7 +18,17 @@ body {
   position: absolute;
   top: 10px;
   right: 10px;
+  width: 36;
+  height: 36;
   z-index: 9999;
+  background: white;
+  border-radius: 100%;
+}
+
+.gambar-logo-github {
+  position: absolute;
+  border-radius: 90%;
+  margin-left: 0.9;
 }
 
 .inputsearch {
@@ -92,6 +102,10 @@ body {
   z-index: 999;
   font-family: "Arial";
 }
+.container-go-button {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
 .go-button {
   font-size: 20px;
   background-color: gold;
@@ -103,8 +117,6 @@ body {
   transition: transform 0.3s ease;
   background-image: linear-gradient(to bottom, #f7df89, #d5a900);
   font-weight: bolder;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .go-button:hover {
