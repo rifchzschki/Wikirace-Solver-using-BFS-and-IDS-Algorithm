@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"strings"
 	"time"
-	"os"
+
 	// "github.com/gin-gonic/gin"
 	"github.com/PuerkitoBio/goquery"
 )
@@ -123,12 +124,12 @@ func BFS(startURL, targetURL string) (string, string, string, time.Duration) {
 
 
 
-func main() {
-	startURL := "https://en.wikipedia.org/wiki/Tennis"
-	targetURL := "https://en.wikipedia.org/wiki/Stephen_Curry"
-	path, checked, inSolution, duration := BFS(startURL, targetURL)
-	fmt.Println(path)
-	fmt.Println(checked)
-	fmt.Println(inSolution)
-	fmt.Println(duration.String())
-}
+// func main() {
+// 	startURL := "https://en.wikipedia.org/wiki/Tennis"
+// 	targetURL := "https://en.wikipedia.org/wiki/Stephen_Curry"
+// 	path, checked, inSolution, duration := BFS(startURL, targetURL)
+// 	fmt.Println(path)
+// 	fmt.Println(checked)
+// 	fmt.Println(inSolution)
+// 	fmt.Println(duration.String())
+// }
