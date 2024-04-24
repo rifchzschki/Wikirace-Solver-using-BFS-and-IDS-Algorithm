@@ -87,9 +87,9 @@ func IDSConcurrent(startURL, targetURL string) {
 
 }
 
-func main() {
-	startURL := "https://en.wikipedia.org/wiki/Jokowi"
-	targetURL := "https://en.wikipedia.org/wiki/MNC_Asia_Holding"
+// func main() {
+// 	startURL := "https://en.wikipedia.org/wiki/Jokowi"
+// 	targetURL := "https://en.wikipedia.org/wiki/MNC_Asia_Holding"
 
-	IDSConcurrent(startURL, targetURL)
-}
+// 	IDSConcurrent(startURL, targetURL)
+// }
