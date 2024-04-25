@@ -63,12 +63,14 @@
               name="start"
               required
             />
-            <ul id="autocomplete-list-1"></ul>
+            <div class="autocomplete-list">
+              <ul id="autocomplete-list-1"></ul>
+            </div>
           </div>
           <button
-            type="submit"
-            class="button-swap"
-            name="swap"
+          type="button"
+          class="button-swap"
+          name="swap"
             onclick="swapValues()"
           >
             &#8646;
@@ -83,7 +85,9 @@
               name="target"
               required
             />
+            <div class="autocomplete-list">
             <ul id="autocomplete-list-2"></ul>
+          </div>
           </div>
         </div>
 
@@ -92,23 +96,6 @@
           <button class="go-button" type="submit">GO!</button>
         </div>
       </form>
-      <div class="text-true">
-        <!-- IDS Path -->
-        <h1 class="ids" id="ids-path"></h1>
-
-        <!-- BFS Path -->
-        <h1 class="bfs" id="bfs-path"></h1>
-
-        <!-- Search Time -->
-        <p id="search-time"></p>
-      </div>
-
-      <!-- COMMENT SEARCH TRUE -->
-      <!-- <div class="text-true">
-            <h1 class="ids"> Found ${ids-path} with IDS of separation from ${startPage} to ${targetPage} in ${searchTime} seconds!</h1>
-            <h1 class="bfs"> Found ${bfs-path} with BFS of separation from ${startPage} to ${targetPage} in ${searchTime} seconds!</h1>
-        </div> -->
-    </div>
     <script src="static/src/wikirace.js"></script>
   </body>
 </html>

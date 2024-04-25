@@ -88,6 +88,7 @@ func IDSConcurrent(startURL, targetURL string) ([] string, int, int, string) {
 		if depth >= 50 {
 			break
 		}
+		fmt.Println(depth)
 	}
 	fmt.Println("Tidak ditemukan")
 	return nil, checked, 0, time.Since(startTime).String()

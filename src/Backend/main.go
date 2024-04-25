@@ -11,20 +11,38 @@ import (
 )
 
 // Data dummy untuk autocomplete
-var data = []string{"apple", "banana", "cherry", "date", "elderberry", "fig", "grape"}
+// var data = []string{"apple", "banana", "cherry", "date", "elderberry", "fig", "grape"}
+var (
+	// titles []string
+	path map[string]string
+)
+
+// titles, path = FetchSuggestions()
+
+func mergeMaps(map1, map2 map[string]string) map[string]string {
+    mergedMap := make(map[string]string)
+
+    // Menyalin elemen dari map1 ke mergedMap
+    for key, value := range map1 {
+        mergedMap[key] = value
+    }
+
+    // Menambahkan atau mengganti elemen dari map2 ke mergedMap
+    for key, value := range map2 {
+        mergedMap[key] = value
+    }
+
+    return mergedMap
+}
+
+
 
 func autocompleteHandler(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query().Get("query")
 	var results []string
-	for _, item := range data {
-		fmt.Println(item)
-		if strings.Contains(item, query) {
-			results = append(results, item)
-			fmt.Println("mashokk")
-		}
-		fmt.Println("hitung")
-	}
-	
+	var tempPath map[string]string
+	results,tempPath,_= algorithm.FetchSuggestions(query)
+	path = mergeMaps(tempPath, path)
 	fmt.Print(results)
 	response, _:= json.Marshal(results)
 	w.Header().Set("Content-Type", "application/json")
@@ -43,14 +61,22 @@ func handlerProcess(w http.ResponseWriter, r *http.Request) {
         }
 		
 		// algoritma pengambilan data hasil pencarian
-        var startURL = "https://en.wikipedia.org/wiki/" + r.FormValue("start")
-        var targetURL = "https://en.wikipedia.org/wiki/" + r.FormValue("target")
+        var start = r.FormValue("start")
+        var startURL = path[start]
+        var target = r.FormValue("target")
+        var targetURL = path[target]
         var algo = r.Form.Get("algo")
 		fmt.Println("Nilai algo: ", algo)
+		fmt.Println(start, target)
+		fmt.Println(startURL, targetURL)
 
-		path, checked, solutionLength, duration:= algorithm.Test(algo, startURL, targetURL)
+		
 
-        var data = map[string]interface{}{
+		path, checked, solutionLength, duration:= algorithm.Test(algo, startURL, targetURL)   
+		if(len(path)<=0){
+			path = append(path, "Rute tidak ditemukan") 
+		}   
+		var data = map[string]interface{}{
 			"start":           startURL,
 			"target":          targetURL,
 			"path":            path,
@@ -129,3 +155,5 @@ func main() {
 		fmt.Println(duration)
 	}
 }
+
+
