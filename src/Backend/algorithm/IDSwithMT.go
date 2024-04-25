@@ -107,13 +107,4 @@ func IDSConcurrentMT(startURL, targetURL string) {
 		}
 	}
 
-	// close(ch)
 }
-
-// func main() {
-// 	startURL := "https://en.wikipedia.org/wiki/Jokowi"
-// 	targetURL := "https://en.wikipedia.org/wiki/Nasdem_Party"
-//     // Jarak
-
-// 	IDSConcurrent(startURL, targetURL)
-// }
