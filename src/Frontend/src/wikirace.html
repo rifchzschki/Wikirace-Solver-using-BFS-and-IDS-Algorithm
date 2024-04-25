@@ -3,11 +3,11 @@
 <html>
   <head>
     <title>WikiRace</title>
-    <link rel="stylesheet" href="static/wikirace.css" />
+    <link rel="stylesheet" href="static/src/wikirace.css" />
   </head>
   <style>
     body {
-      background-image: url("static/before.jpg");
+      background-image: url("static/assets/before.jpg");
       background-size: cover; /* Atur ukuran gambar agar menutupi seluruh latar belakang */
       background-repeat: no-repeat; /* Hindari pengulangan gambar */
     }
@@ -22,7 +22,7 @@
         <div class="logogithub">
           <a href="https://github.com">
             <img
-              src="static/logogithub.png"
+              src="static/assets/logogithub.png"
               width="35"
               height="35"
               class="gambar-logo-github"
@@ -33,7 +33,7 @@
 
       <!-- LOGO WIKIRACE -->
       <div class="container-wikirace">
-        <img src="static/titlewikirace.png" />
+        <img src="static/assets/titlewikirace.png" />
 
         <!-- FIND THE SHORTEST -->
         <div>
@@ -53,25 +53,38 @@
 
         <!-- INPUT BOX -->
         <div class="inputsearch">
-          <input
-            class="input-box"
-            type="text"
-            id="search-bar-1"
-            placeholder="Start page"
-            autocomplete="off"
-            name="start"
-            required
-          />
-          <button type="submit" class="button-swap" name="swap">&#8646;</button>
-          <input
-            class="input-box"
-            type="text"
-            id="search-bar-2"
-            placeholder="Target page"
-            autocomplete="off"
-            name="target"
-            required
-          />
+          <div class="container-input-search-bar">
+            <input
+              class="input-box"
+              type="text"
+              id="search-bar-1"
+              placeholder="Start page"
+              autocomplete="off"
+              name="start"
+              required
+            />
+            <ul id="autocomplete-list-1"></ul>
+          </div>
+          <button
+            type="submit"
+            class="button-swap"
+            name="swap"
+            onclick="swapValues()"
+          >
+            &#8646;
+          </button>
+          <div class="container-input-search-bar">
+            <input
+              class="input-box"
+              type="text"
+              id="search-bar-2"
+              placeholder="Target page"
+              autocomplete="off"
+              name="target"
+              required
+            />
+            <ul id="autocomplete-list-2"></ul>
+          </div>
         </div>
 
         <!-- BUTTON GO -->
@@ -96,7 +109,7 @@
             <h1 class="bfs"> Found ${bfs-path} with BFS of separation from ${startPage} to ${targetPage} in ${searchTime} seconds!</h1>
         </div> -->
     </div>
-    <script src="wikirace.js"></script>
+    <script src="static/src/wikirace.js"></script>
   </body>
 </html>
 {{end}} {{define "result"}}
@@ -104,11 +117,11 @@
 <html>
   <head>
     <title>WikiRace</title>
-    <link rel="stylesheet" href="static/wikirace.css" />
+    <link rel="stylesheet" href="static/src/wikirace.css" />
   </head>
   <style>
     body {
-      background-image: url("static/after.jpg");
+      background-image: url("static/assets/after.jpg");
       background-size: cover; /* Atur ukuran gambar agar menutupi seluruh latar belakang */
       background-repeat: no-repeat; /* Hindari pengulangan gambar */
     }
@@ -118,7 +131,7 @@
       <div class="result">
         <!-- LOGO WIKIRACE -->
         <div class="titlewikirace">
-          <img src="static/titlewikirace.png" />
+          <img src="static/assets/titlewikirace.png" />
           <h1>Find the shortest paths from</h1>
         </div>
 
@@ -152,7 +165,7 @@
         </div>
       </div>
     </div>
-    <script src="wikirace.js"></script>
+    <script src="static/src/wikirace.js"></script>
   </body>
 </html>
 {{end}}
