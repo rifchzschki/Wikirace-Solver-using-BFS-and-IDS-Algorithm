@@ -55,7 +55,8 @@ func scrapping(currentURL string)([]string){
 }
 
 
-const max = 50
+const max = 50 
+// jumlah go routine
 func BFS(startURL, targetURL string) ([]string, int,int,string) {
 	startTime := time.Now()
 	visited := make(map[string]bool)
