@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
@@ -28,7 +27,7 @@ func isRedirect(doc *goquery.Document) bool {
 
 func scrapping(currentURL string)([]string){
 	queue := []string{}
-	visited := make(map[string]bool) // Map untuk menyimpan URL yang telah ditemukan
+	visited := make(map[string]bool)
 
 	resp, err := http.Get(currentURL)
 	if err != nil {
@@ -73,12 +72,6 @@ func BFS(startURL, targetURL string) ([] string, int, int, string) {
 	paths := make(map[string]string)
 	articlesChecked := 0
 
-	file, err := os.Create("output.txt")
-	if err != nil {
-		log.Fatal("Cannot create file", err)
-	}
-	defer file.Close()
-
 	for len(queue) > 0 {
 		currentURL := queue[0]
 		queue = queue[1:]
@@ -113,12 +106,6 @@ func BFS(startURL, targetURL string) ([] string, int, int, string) {
 			if !visited[neighbor] {
 				queue = append(queue, neighbor)
 				
-				output := fmt.Sprintf("Parent : %s, Child : %s\n", currentURL, neighbor)
-				_, err := file.WriteString(output)
-				if err != nil {
-					log.Fatal("Cannot write to file", err)
-				}
-				
 				if _, ok := paths[neighbor]; !ok {
 					paths[neighbor] = currentURL
 				}
@@ -131,14 +118,3 @@ func BFS(startURL, targetURL string) ([] string, int, int, string) {
 	return nil , articlesChecked, 0, time.Since(startTime).String()
 }
 
-
-
-// func main() {
-// 	startURL := "https://en.wikipedia.org/wiki/Tennis"
-// 	targetURL := "https://en.wikipedia.org/wiki/Stephen_Curry"
-// 	path, checked, inSolution, duration := BFS(startURL, targetURL)
-// 	fmt.Println(path)
-// 	fmt.Println(checked)
-// 	fmt.Println(inSolution)
-// 	fmt.Println(duration)
-// }
