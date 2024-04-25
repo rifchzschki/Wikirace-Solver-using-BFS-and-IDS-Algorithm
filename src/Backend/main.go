@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -9,9 +10,31 @@ import (
 	"wikirace/algorithm"
 )
 
+// Data dummy untuk autocomplete
+var data = []string{"apple", "banana", "cherry", "date", "elderberry", "fig", "grape"}
+
+func autocompleteHandler(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query().Get("query")
+	var results []string
+	for _, item := range data {
+		fmt.Println(item)
+		if strings.Contains(item, query) {
+			results = append(results, item)
+			fmt.Println("mashokk")
+		}
+		fmt.Println("hitung")
+	}
+	
+	fmt.Print(results)
+	response, _:= json.Marshal(results)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(response)
+}
+
+
 func handlerProcess(w http.ResponseWriter, r *http.Request) {
     if r.Method == "POST" {
-		var filepath = filepath.Join("../", "Frontend", "html_project", "wikirace.html")
+		var filepath = filepath.Join("../", "Frontend", "src", "wikirace.html")
         var tmpl = template.Must(template.New("result").ParseFiles(filepath))
 
         if err := r.ParseForm(); err != nil {
@@ -46,7 +69,7 @@ func handlerProcess(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlerHome(w http.ResponseWriter, r *http.Request) {
-	var filepath = filepath.Join("../", "Frontend", "html_project", "wikirace.html")
+	var filepath = filepath.Join("../", "Frontend", "src", "wikirace.html")
 	if r.Method == "GET" {
         var tmpl = template.Must(template.New("form").ParseFiles(filepath))
         var err = tmpl.Execute(w, nil)
@@ -64,10 +87,11 @@ func handlerHome(w http.ResponseWriter, r *http.Request) {
 func startServer(){
 	http.HandleFunc("/", handlerHome)
 	http.HandleFunc("/process", handlerProcess)
+	http.HandleFunc("/autocomplete", autocompleteHandler)
 	
 	http.Handle("/static/", 
 		http.StripPrefix("/static/", 
-			http.FileServer(http.Dir("../Frontend/html_project"))))
+			http.FileServer(http.Dir("../Frontend/"))))
 	
 	// Menjalankan server di port 8080
 	var address = "localhost:8080"
