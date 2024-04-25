@@ -82,10 +82,6 @@ func IDSConcurrent(startURL, targetURL string) ([] string, int, int, string) {
                 targetURL = paths[targetURL]
 				path = append([]string{targetURL}, path...)
 			}
-			// fmt.Println("Shortest path:")
-			// for _, p := range path {
-			// 	fmt.Println(p)
-			// }
 			return path, checked, len(path), time.Since(startTime).String()
 		}
 		depth++
@@ -98,13 +94,3 @@ func IDSConcurrent(startURL, targetURL string) ([] string, int, int, string) {
 
 }
 
-func main() {
-	startURL := "https://en.wikipedia.org/wiki/Jokowi"
-	targetURL := "https://en.wikipedia.org/wiki/Hary_Tanoesoedijo"
-
-	list, checked, panjang, duration := IDSConcurrent(startURL, targetURL)
-	fmt.Println(list)
-	fmt.Println(checked)
-	fmt.Println(panjang)
-	fmt.Println(duration)
-}
