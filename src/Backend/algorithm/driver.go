@@ -7,7 +7,7 @@ import (
 
 func getTitle(path []string) ([] string) {
 	var titles []string
-    for _, url := range path { // Loop melalui setiap elemen di slice path
+    for _, url := range path { 
 		title := strings.TrimPrefix(url, "https://en.wikipedia.org/wiki/")
 		title =  strings.ReplaceAll(title, "_", " ")
 		titles = append(titles, title)
