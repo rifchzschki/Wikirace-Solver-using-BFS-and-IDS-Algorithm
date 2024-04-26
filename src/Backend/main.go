@@ -106,6 +106,7 @@ func startServer(){
 			http.FileServer(http.Dir("Frontend"))))
 	
 	var address = "0.0.0.0:8080"
+	// var address = "localhost:8080"
 	fmt.Printf("server started at %s\n", address)
 	err := http.ListenAndServe(address, nil)
 	if err != nil {
