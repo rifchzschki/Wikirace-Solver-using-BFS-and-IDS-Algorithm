@@ -119,6 +119,12 @@ func startServer(){
 
 func main() {
 		startServer()
+		// paths, checked, length, duration := algorithm.Test("ids", "https://en.wikipedia.org/wiki/Ayam", "https://en.wikipedia.org/wiki/Gajah_Mada" )
+
+		// fmt.Println(paths)
+		// fmt.Println(checked)
+		// fmt.Println(length)
+		// fmt.Println(duration)
 }
 
 
