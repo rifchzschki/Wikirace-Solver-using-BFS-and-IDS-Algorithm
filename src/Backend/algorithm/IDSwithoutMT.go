@@ -3,7 +3,6 @@ package algorithm
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -13,20 +12,19 @@ import (
 
 
 
-func DFSConcurrent(currentURL, targetURL string, depth int, visited map[string]bool, paths map[string]string, articlesChecked *int, file *os.File) bool {
-	
-	output := fmt.Sprintln(currentURL)
-	file.WriteString(output)
-	
+func DFSConcurrent(currentURL, targetURL string, depth int, visited map[string]bool, paths map[string]string, articlesChecked *int) bool {
+	// output := fmt.Sprintln(currentURL)
+	// file.WriteString(output)
 	
 	
-	fmt.Println(depth)
-	file.WriteString(strconv.Itoa(depth))
-	fmt.Println(currentURL)
+	
+	// fmt.Println(depth)
+	// file.WriteString(strconv.Itoa(depth))
+	// fmt.Println(currentURL)
 	if currentURL == targetURL {
-		fmt.Println()
-        fmt.Println()
-        fmt.Println(currentURL)
+		// fmt.Println()
+        // fmt.Println()
+        // fmt.Println(currentURL)
         return true
     }
     if depth == 0 {
@@ -69,7 +67,7 @@ func DFSConcurrent(currentURL, targetURL string, depth int, visited map[string]b
 					*articlesChecked ++
 					// file.WriteString(strconv.Itoa(*articlesChecked))
 					paths[fullURL] = currentURL
-					found = DFSConcurrent(fullURL, targetURL, depth-1, visited, paths, articlesChecked, file)
+					found = DFSConcurrent(fullURL, targetURL, depth-1, visited, paths, articlesChecked)
 				}
 			}
 		})
@@ -78,12 +76,12 @@ func DFSConcurrent(currentURL, targetURL string, depth int, visited map[string]b
 }
 
 func IDSConcurrent(startURL, targetURL string) ([] string, int, int, string) {
-	file, err := os.OpenFile("output.txt", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
-	if err != nil {
-		fmt.Println("Gagal membuka file:", err)
-		// return false
-	}
-	defer file.Close()
+	// file, err := os.OpenFile("output.txt", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+	// if err != nil {
+	// 	fmt.Println("Gagal membuka file:", err)
+	// 	// return false
+	// }
+	// defer file.Close()
 	startTime := time.Now()
 	depth := 1
 	paths := make(map[string]string)
@@ -92,9 +90,7 @@ func IDSConcurrent(startURL, targetURL string) ([] string, int, int, string) {
 	
 	for !found {
 		visited := make(map[string]bool)
-        // fmt.Println(depth)
-		found = DFSConcurrent(startURL, targetURL, depth, visited, paths, &checked, file)
-        // fmt.Println(found)
+		found = DFSConcurrent(startURL, targetURL, depth, visited, paths, &checked)
 		if found {
             // Path found
 			path := []string{targetURL}
@@ -110,7 +106,7 @@ func IDSConcurrent(startURL, targetURL string) ([] string, int, int, string) {
 		if depth >= 5 {
 			break
 		}
-		file.WriteString("ahahahahahahahahahah")
+		// file.WriteString("ahahahahahahahahahah")
 	}
 	fmt.Println("Tidak ditemukan")
 	duration := time.Since(startTime)
@@ -118,4 +114,5 @@ func IDSConcurrent(startURL, targetURL string) ([] string, int, int, string) {
 	return nil, checked, 0, strconv.Itoa(int(durationMS)) + "ms"
 
 }
+
 

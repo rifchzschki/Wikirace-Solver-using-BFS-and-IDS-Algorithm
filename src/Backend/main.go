@@ -106,7 +106,6 @@ func startServer(){
 			http.FileServer(http.Dir("Frontend"))))
 	
 	var address = "0.0.0.0:8080"
-	// var address = "localhost:8080"
 	fmt.Printf("server started at %s\n", address)
 	err := http.ListenAndServe(address, nil)
 	if err != nil {
@@ -119,12 +118,6 @@ func startServer(){
 
 func main() {
 		startServer()
-		// paths, checked, length, duration := algorithm.Test("ids", "https://en.wikipedia.org/wiki/Ayam", "https://en.wikipedia.org/wiki/Gajah_Mada" )
-
-		// fmt.Println(paths)
-		// fmt.Println(checked)
-		// fmt.Println(length)
-		// fmt.Println(duration)
 }
 
 

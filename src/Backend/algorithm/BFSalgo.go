@@ -1,11 +1,11 @@
 package algorithm
 
 import (
-	
 	"log"
+	"strconv"
 	"strings"
 	"time"
-	
+
 	"sync"
 	// "github.com/gin-gonic/gin"
 	"github.com/PuerkitoBio/goquery"
@@ -41,7 +41,7 @@ func scrapping(currentURL string)([]string){
 	doc.Find("div#bodyContent").Each(func(i int, s *goquery.Selection) {
 		s.Find("a[href]").Each(func(i int, s *goquery.Selection) {
 		link, _ := s.Attr("href")
-		if strings.HasPrefix(link, "/wiki/") && !hasPrefix(unwantedWikiPrefixes[:],link) && !strings.Contains(link,":"){
+		if strings.HasPrefix(link, "/wiki/") && !strings.Contains(link,":"){
 			fullURL := "https://en.wikipedia.org" + link
 			
 			
@@ -72,9 +72,10 @@ func BFS(startURL, targetURL string) ([]string, int,int,string) {
 	
 	for currentURL := range queue {
 		articleChecked++
-		if time.Since(startTime) > (5 * time.Minute) {
-
-			return nil,articleChecked,0,time.Since(startTime).String()
+		if len(queue)>=100000000{
+			duration := time.Since(startTime)
+			durationMS := duration.Milliseconds()
+			return nil,articleChecked,0,strconv.Itoa(int(durationMS)) + "ms"
 		}
 		here:
 		mu.Lock()
@@ -86,8 +87,9 @@ func BFS(startURL, targetURL string) ([]string, int,int,string) {
 				currentURL = paths[currentURL]
 				path = append([]string{currentURL}, path...)
 			}
-			
-			return path,articleChecked, len(path),time.Since(startTime).String()
+			duration := time.Since(startTime)
+			durationMS := duration.Milliseconds()
+			return path,articleChecked, len(path),strconv.Itoa(int(durationMS)) + "ms"
 		}
 		mu.Unlock()
 
@@ -142,7 +144,9 @@ func BFS(startURL, targetURL string) ([]string, int,int,string) {
 
 	wg.Wait()
 	close(queue)  
-	return nil, 0,0,time.Since(startTime).String()
+	duration := time.Since(startTime)
+	durationMS := duration.Milliseconds()
+	return nil, 0,0,strconv.Itoa(int(durationMS)) + "ms"
 }
 
 
