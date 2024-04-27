@@ -26,7 +26,7 @@ func Test(algorithm, startURL, targetURL string) ([] string, int, int, string) {
 	fmt.Println(startURL, targetURL)
 	if(strings.EqualFold(algorithm, "ids")){
 		fmt.Println("Pencarian menggunakan algoritma IDS")
-		rute,banyakArtic, panjangRute, durasi = IDSConcurrent(startURL, targetURL)
+		rute,banyakArtic, panjangRute, durasi = IDS(startURL, targetURL)
 	}else{
 		fmt.Println("Pencarian menggunakan algoritma BFS")
 		rute,banyakArtic, panjangRute, durasi = BFS(startURL, targetURL)

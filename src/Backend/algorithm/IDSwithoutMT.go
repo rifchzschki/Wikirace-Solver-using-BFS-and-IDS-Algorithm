@@ -10,21 +10,10 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-
-
-func DFSConcurrent(currentURL, targetURL string, depth int, visited map[string]bool, paths map[string]string, articlesChecked *int) bool {
-	// output := fmt.Sprintln(currentURL)
-	// file.WriteString(output)
-	
-	
-	
-	// fmt.Println(depth)
-	// file.WriteString(strconv.Itoa(depth))
-	// fmt.Println(currentURL)
+// Function for run DFS
+// Akan melakukan proses rekursi hingga ditemukan solusi atau hingga kemungkinan solusi habis
+func DFS(currentURL, targetURL string, depth int, visited map[string]bool, paths map[string]string, articlesChecked *int) bool {
 	if currentURL == targetURL {
-		// fmt.Println()
-        // fmt.Println()
-        // fmt.Println(currentURL)
         return true
     }
     if depth == 0 {
@@ -56,18 +45,17 @@ func DFSConcurrent(currentURL, targetURL string, depth int, visited map[string]b
 	}
 	
 	*articlesChecked ++
-	// file.WriteString(strconv.Itoa(*articlesChecked))
+
 	found := false
 	doc.Find("div#bodyContent").Each(func(i int, s *goquery.Selection) {
 		s.Find("a").Each(func(i int, s *goquery.Selection) {
 			link, _ := s.Attr("href")
-			if strings.HasPrefix(link, "/wiki/") && !hasPrefix(unwantedWikiPrefixes[:],link) && !strings.Contains(link,":") {
+			if strings.HasPrefix(link, "/wiki/") && !strings.Contains(link,":") {
 				fullURL := "https://en.wikipedia.org" + link
 				if !visited[fullURL] && !found {
 					*articlesChecked ++
-					// file.WriteString(strconv.Itoa(*articlesChecked))
 					paths[fullURL] = currentURL
-					found = DFSConcurrent(fullURL, targetURL, depth-1, visited, paths, articlesChecked)
+					found = DFS(fullURL, targetURL, depth-1, visited, paths, articlesChecked)
 				}
 			}
 		})
@@ -75,13 +63,11 @@ func DFSConcurrent(currentURL, targetURL string, depth int, visited map[string]b
 	return found
 }
 
-func IDSConcurrent(startURL, targetURL string) ([] string, int, int, string) {
-	// file, err := os.OpenFile("output.txt", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
-	// if err != nil {
-	// 	fmt.Println("Gagal membuka file:", err)
-	// 	// return false
-	// }
-	// defer file.Close()
+//  Function for run IDS algorithm
+// Akan menginisiasi proses ids dan memanggil proses dfs dengan limitasi jumlah depth
+// akan mengeluarkan rute, jumlah artikel yang diperiksa, jumlah artikel solusi, durasi pencarian jika hasil ditemukan
+// akan mengeluarkan nil, jumlah artikel yang diperiksa, 0, durasi pencarian
+func IDS(startURL, targetURL string) ([] string, int, int, string) {
 	startTime := time.Now()
 	depth := 1
 	paths := make(map[string]string)
@@ -90,7 +76,7 @@ func IDSConcurrent(startURL, targetURL string) ([] string, int, int, string) {
 	
 	for !found {
 		visited := make(map[string]bool)
-		found = DFSConcurrent(startURL, targetURL, depth, visited, paths, &checked)
+		found = DFS(startURL, targetURL, depth, visited, paths, &checked)
 		if found {
             // Path found
 			path := []string{targetURL}
@@ -106,7 +92,6 @@ func IDSConcurrent(startURL, targetURL string) ([] string, int, int, string) {
 		if depth >= 5 {
 			break
 		}
-		// file.WriteString("ahahahahahahahahahah")
 	}
 	fmt.Println("Tidak ditemukan")
 	duration := time.Since(startTime)

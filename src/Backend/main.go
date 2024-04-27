@@ -16,7 +16,7 @@ var (
 )
 
 
-
+// Function for merge two map
 func mergeMaps(map1, map2 map[string]string) map[string]string {
     mergedMap := make(map[string]string)
     for key, value := range map1 {
@@ -30,7 +30,7 @@ func mergeMaps(map1, map2 map[string]string) map[string]string {
 }
 
 
-
+// Handler function for autocomplete search
 func autocompleteHandler(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query().Get("query")
 	var results []string
@@ -43,7 +43,7 @@ func autocompleteHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(response)
 }
 
-
+// Handler function for proccess algorithm
 func handlerProcess(w http.ResponseWriter, r *http.Request) {
     if r.Method == "POST" {
 		var filepath = "Frontend/src/wikirace.html"
@@ -80,6 +80,7 @@ func handlerProcess(w http.ResponseWriter, r *http.Request) {
     http.Error(w, "", http.StatusBadRequest)
 }
 
+// Handler function for home page
 func handlerHome(w http.ResponseWriter, r *http.Request) {
 	var filepath = "Frontend/src/wikirace.html"
 	if r.Method == "GET" {
@@ -97,6 +98,7 @@ func handlerHome(w http.ResponseWriter, r *http.Request) {
 
 
 func startServer(){
+	// Kumpulan handler
 	http.HandleFunc("/", handlerHome)
 	http.HandleFunc("/process", handlerProcess)
 	http.HandleFunc("/autocomplete", autocompleteHandler)
@@ -105,6 +107,7 @@ func startServer(){
 		http.StripPrefix("/static/", 
 			http.FileServer(http.Dir("Frontend"))))
 	
+	// Port dan memulai server
 	var address = "0.0.0.0:8080"
 	fmt.Printf("server started at %s\n", address)
 	err := http.ListenAndServe(address, nil)
