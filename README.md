@@ -1,4 +1,4 @@
-# TUBES-2-STIMA
+# Wikirace-Solver-using-BFS-and-IDS-Algorithm
 
 Membuat program wikirace solver menggunakan algoritma IDS dan BFS, dengan interface berupa website
 
